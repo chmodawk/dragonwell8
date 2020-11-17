@@ -32,21 +32,32 @@ if [ $# -lt 1 ]; then
   echo "USAGE: $0 release/debug/fastdebug"
 fi
 
+arch=$(uname -m)
+if [[ $arch == 'x86_64' ]]; then
+  arch_dir="amd64"
+elif [[ $arch == 'aarch64' ]]; then
+  arch_dir="aarch64"
+else
+  echo "Unrecognized architecture: ${arch}"
+  exit 1
+fi
+
+
 LC_ALL=C
 BUILD_MODE=$1
 
 case "$BUILD_MODE" in
     release)
         DEBUG_LEVEL="release"
-        JDK_IMAGES_DIR=`pwd`/build/linux-x86_64-normal-server-release/images
+        JDK_IMAGES_DIR=`pwd`/build/linux-${arch}-normal-server-release/images
     ;;
     debug)
         DEBUG_LEVEL="slowdebug"
-        JDK_IMAGES_DIR=`pwd`/build/linux-x86_64-normal-server-slowdebug/images
+        JDK_IMAGES_DIR=`pwd`/build/linux-${arch}-normal-server-slowdebug/images
     ;;
     fastdebug)
 	DEBUG_LEVEL="fastdebug"
-	JDK_IMAGES_DIR=`pwd`/build/linux-x86_64-normal-server-fastdebug/images
+	JDK_IMAGES_DIR=`pwd`/build/linux-${arch}-normal-server-fastdebug/images
     ;;
     *)
         echo "Argument must be release or debug or fastdebug!"
@@ -131,7 +142,7 @@ grep "^OpenJDK .*VM" /tmp/version.out | grep "(Alibaba Dragonwell $DISTRO_VERSIO
 if [ 0 != $? ]; then RET=1; fi
 \rm -f /tmp/version.out
 
-ldd $NEW_JAVA_HOME/jre/lib/amd64/libzip.so|grep libz
+ldd $NEW_JAVA_HOME/jre/lib/${arch_dir}/libzip.so|grep libz
 if [ 0 != $? ]; then RET=1; fi
 
 exit $RET
