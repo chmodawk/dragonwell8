@@ -36,7 +36,7 @@ warning() {
 subrepos="corba jaxp jaxws langtools jdk hotspot nashorn"
 
 # default options
-GITURL="git@github.com:alibaba"
+GITURL="https://github.com/alibaba"
 REPO_PREFIX="dragonwell8_"
 DEPTH=1000
 BRANCH="master"
@@ -63,7 +63,7 @@ do
       shift;
       site=$1
       if [[ $site == "github" ]]; then
-        GITURL="git@github.com:alibaba"
+        GITURL="https://github.com/alibaba"
         REPO_PREFIX="dragonwell8_"
       elif [[ $site == "gitlab" ]]; then
         # inside alibaba
