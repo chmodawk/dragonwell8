@@ -39,7 +39,7 @@ subrepos="corba jaxp jaxws langtools jdk hotspot nashorn"
 GITURL="https://github.com/alibaba"
 REPO_PREFIX="dragonwell8_"
 DEPTH=1000
-BRANCH="master"
+BRANCH="wisp_nio_test"
 
 usage() {
       echo "usage: $0 [-h|--help] [-b|--branch branch_name] [-s|--site github|gitlab]"
@@ -111,7 +111,7 @@ for repo in ${subrepos}; do
       ${GIT} checkout tags/${BRANCH} -b ${BRANCH}
       result=$?
       if [ $result  != 0 ]; then
-        error "failed to checkout ${repo} to ${BRANCH}"
+         echo "not found ${BRANCH} in ${repo}"
       fi
     fi
     cd ..
